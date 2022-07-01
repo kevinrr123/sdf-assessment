@@ -31,7 +31,7 @@ public class Main
             String response = null;
             //Not required anymore - String input = cons.readLine("to server> ");
             socket = new Socket("task02.chuklee.com", 80);
-            
+            socket.setSoTimeout(15*1000);
             os = socket.getOutputStream();     
             is = socket.getInputStream();
             ObjectOutputStream dos = new ObjectOutputStream(os);    
@@ -74,6 +74,13 @@ public class Main
                         os.close();
                         is.close();                       
                         socket.close();
+                    } else if(!responseSec){
+                        String Error = dis.readUTF();
+                        os.close();
+                        is.close();                       
+                        socket.close();
+                        System.out.println("FAILED\n");
+                        System.out.println(Error);
                     }
 
                 }catch(EOFException e){
